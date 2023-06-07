@@ -5,12 +5,21 @@ let userTurns = []
 let computerTurns = []
 
 $(document).keydown(function () {
-    if (!gameRunning) {
+    if (!gameRunning){
         $("h1").text(`Level ${level}`)
         setTimeout(computerPlay, 200)
         gameRunning = true
     }
 })
+
+$(".start-game").on("click" ,function () {
+    if (!gameRunning){
+        $("h1").text(`Level ${level}`)
+        setTimeout(computerPlay, 200)
+        gameRunning = true
+        $(".start-game").css("visibility" , "hidden")
+    }
+} )
 
 function computerPlay() {
     let randomNumber = Math.floor(Math.random() * 4)
@@ -45,12 +54,15 @@ function checkAnswers(currentLevel) {
         var gameOverAudio = new Audio("./sounds/wrong.mp3")
         gameOverAudio.play()
         $("body").css("background-color", "red")
+        
         setTimeout(restartGame, 500)
     }
 
 }
 
 function restartGame() {
+    $(".start-game").css("visibility" , "visible")
+    $(".start-game").text("RESTART")
     $("body").css("background-color", "rgb(84, 3, 84)")
     gameRunning = false
     level = 0
